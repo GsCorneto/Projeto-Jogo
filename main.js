@@ -13,7 +13,8 @@ function criarElemento(nome, pontos) {
     const pessoa = document.createElement('h3');
     const pontuacao = document.createElement('h4');
     pessoa.textContent = nome;
-    container.appendChild(pessoa);
+    pontuacao.textContent = pontos;
+    container.appendChild(pessoa, pontuacao);
   }
 
 function iniciaJogo(){
@@ -81,17 +82,3 @@ function contaTempo(){
 }
 
 
-/*
-function criar
-
-fetch().then(response => {
-    if (!response.ok){
-        throw new Error ("Ora Bolas! houve um erro");
-    }
-    return response.json
-})
-.then( data => {
-    console.log(data.results)
-})
-
-*/

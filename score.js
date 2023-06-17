@@ -4,7 +4,7 @@ const db = require('./conn.js');
 const router = express.Router();
 
 // Registrar um novo resultado
-router.post("/", async (req, res) => {
+router.post("/mongodb://127.0.0.1:27017", async (req, res) => {
       let col = await db.collection('score');
       let out = await col.insertOne(req.body)
       res.send(out).status(204);
@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
 
 
 // Pegar os 10 melhores resultados
-router.get("/", async (req, res) => {
+router.get("/mongodb://127.0.0.1:27017", async (req, res) => {
     let col = await db.collection('score');
     let out = await col.find().sort({
         pontos: -1
