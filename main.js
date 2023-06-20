@@ -1,3 +1,14 @@
+function criarElemento(nome, pontos) {
+  const container = document.getElementById('container');
+  const pessoa = document.createElement('h3');
+  const pontuacao = document.createElement('h4');
+  pessoa.textContent = nome;
+  pontuacao.textContent = pontos;
+  container.appendChild(pessoa);
+  container.appendChild(pontuacao);
+}
+
+
 const NUM_STUDS = 60;
 const TEMPO_INICIAL = 20;
 let points = 0;
@@ -8,15 +19,6 @@ const player = prompt("Qual seu nome?")
 
 const placar = document.getElementById("pontos")
 
-function criarElemento(nome, pontos) {
-    const container = document.getElementById('container');
-    const pessoa = document.createElement('h3');
-    const pontuacao = document.createElement('h4');
-    pessoa.textContent = nome;
-    pontuacao.textContent = pontos;
-    container.appendChild(pessoa);
-    container.appendChild(pontuacao);
-  }
 
 function iniciaJogo(){
  points = 0;
@@ -40,7 +42,7 @@ function iniciaJogo(){
 
  timer = setInterval(contaTempo, 1000)
 
- fetch('http://localhost:5050/score')
+ fetch('http://localhost:8004/score')
  .then(response => {
      if (!response.ok) {
        throw new Error('Erro no placar de líderes');
@@ -49,8 +51,8 @@ function iniciaJogo(){
    })
    .then(data => {
      console.log(data);
-     const player = data;
-     player.forEach( jogador => {
+     const champ = data;
+     champ.forEach( jogador => {
        criarElemento(jogador.nome, jogador.points);
      });
 
@@ -69,17 +71,39 @@ function pegaMoeda(moeda) {
     contadorPontos.innerText = points;
 }
 
-function contaTempo(){
+function contaTempo()
 
     --tempo;
     let contadorTempo = document.getElementById("tempo");
     contadorTempo.innerText = tempo;
 
-    if(tempo <= 0){
+    if(tempo <= 0){ 
         clearInterval(timer);
+
         alert("Parabéns "+ player + " você fez " + points + " pontos!");
+
+        let pontuacao = {pontuacao: pontos,
+        
+          nome: <nome_do_jogador></nome_do_jogador>}
+
+        fetch('http://localhost:5050/score', {
+        
+          method: "POST",
+        
+          body: JSON.stringify(pontuacao),
+        
+          headers: {"Content-type": "application/json; charset=UTF-8"}
+        
+        })
+        .then(response => response.json()) 
+        
+        .then(json => console.log(json))
+        
+        .catch(err => console.log(err))
+
         iniciaJogo();
+        
     }
-}
+
 
 
