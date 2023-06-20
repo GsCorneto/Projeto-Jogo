@@ -14,7 +14,8 @@ function criarElemento(nome, pontos) {
     const pontuacao = document.createElement('h4');
     pessoa.textContent = nome;
     pontuacao.textContent = pontos;
-    container.appendChild(pessoa, pontuacao);
+    container.appendChild(pessoa);
+    container.appendChild(pontuacao);
   }
 
 function iniciaJogo(){
@@ -39,7 +40,7 @@ function iniciaJogo(){
 
  timer = setInterval(contaTempo, 1000)
 
- fetch('mongodb://127.0.0.1:27017')
+ fetch('http://localhost:5050/score')
  .then(response => {
      if (!response.ok) {
        throw new Error('Erro no placar de líderes');
@@ -47,9 +48,9 @@ function iniciaJogo(){
      return response.json();
    })
    .then(data => {
-     console.log(data.results);
-     const jogadores = data.results;
-     pontosMostrar.forEach( jogador => {
+     console.log(data);
+     const player = data;
+     player.forEach( jogador => {
        criarElemento(jogador.nome, jogador.points);
      });
 
