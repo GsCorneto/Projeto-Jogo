@@ -42,7 +42,7 @@ function iniciaJogo(){
 
  timer = setInterval(contaTempo, 1000)
 
- fetch('http://localhost:8004/score')
+ fetch('http://localhost:5050/score')
  .then(response => {
      if (!response.ok) {
        throw new Error('Erro no placar de líderes');
@@ -71,7 +71,7 @@ function pegaMoeda(moeda) {
     contadorPontos.innerText = points;
 }
 
-function contaTempo()
+function contaTempo(){
 
     --tempo;
     let contadorTempo = document.getElementById("tempo");
@@ -82,9 +82,10 @@ function contaTempo()
 
         alert("Parabéns "+ player + " você fez " + points + " pontos!");
 
-        let pontuacao = {pontuacao: pontos,
-        
-          nome: <nome_do_jogador></nome_do_jogador>}
+        let pontuacao = {
+          pontuacao: points,
+          nome: player
+        }
 
         fetch('http://localhost:5050/score', {
         
@@ -96,14 +97,12 @@ function contaTempo()
         
         })
         .then(response => response.json()) 
-        
         .then(json => console.log(json))
-        
         .catch(err => console.log(err))
 
         iniciaJogo();
         
     }
 
-
+  }
 

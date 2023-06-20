@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const score = require('./score.js');
 
-const PORT = process.env.PORT || 8004;
+const PORT = process.env.PORT || 5050;
 const app = express();
 
 app.use(cors());
